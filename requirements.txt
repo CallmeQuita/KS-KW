@@ -1,0 +1,11 @@
+numpy
+pandas
+scipy
+matplotlib
+seaborn
+plotly
+scikit-posthocs
+streamlit
+scikit-learn
+requests
+contextily
