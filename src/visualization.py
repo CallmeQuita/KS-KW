@@ -116,10 +116,10 @@ def plot_ks_2d_crosshair(data1, data2, label1, label2, title, best_x, best_y, ma
     ax.plot(best_x, best_y, marker='s', color='red', markersize=10, fillstyle='none', markeredgewidth=3,
              label=f'Max D-Stat Origin\nD = {max_d_stat:.4f}')
 
-    ax.text(best_x - 0.05, best_y + 0.05, 'Top-Left', fontsize=12, fontweight='bold', alpha=0.8, ha='right')
-    ax.text(best_x + 0.05, best_y + 0.05, 'Top-Right', fontsize=12, fontweight='bold', alpha=0.8, ha='left')
-    ax.text(best_x - 0.05, best_y - 0.05, 'Bottom-Left', fontsize=12, fontweight='bold', alpha=0.8, ha='right')
-    ax.text(best_x + 0.05, best_y - 0.05, 'Bottom-Right', fontsize=12, fontweight='bold', alpha=0.8, ha='left')
+    ax.text(best_x - 0.3, best_y + 0.3, 'Top-Left', fontsize=12, fontweight='bold', alpha=0.8, ha='right')
+    ax.text(best_x + 0.3, best_y + 0.3, 'Top-Right', fontsize=12, fontweight='bold', alpha=0.8, ha='left')
+    ax.text(best_x - 0.3, best_y - 0.3, 'Bottom-Left', fontsize=12, fontweight='bold', alpha=0.8, ha='right')
+    ax.text(best_x + 0.3, best_y - 0.3, 'Bottom-Right', fontsize=12, fontweight='bold', alpha=0.8, ha='left')
 
     ctx.add_basemap(ax, crs="EPSG:4326", source=ctx.providers.CartoDB.Positron)
     

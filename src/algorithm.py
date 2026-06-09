@@ -114,13 +114,14 @@ def kruskal_wallis_custom(*groups, verbose=False):
         df = k - 1
         p_value = chi2.sf(H, df) 
     
-    epsilon_sq = H / (N - 1) if N > 1 else 0.0
+    epsilon_sq = max(0.0, (H - k + 1) / (N - k)) if N > k else 0.0
     
     details = {}
     if verbose:
         details = {
             "N": N,
             "n_i": n_i,
+            "k": k,
             "rank_sums": rank_sums,
             "H_unadjusted": H_unadjusted,
             "ties_count": len(ties_count),

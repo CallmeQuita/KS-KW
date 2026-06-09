@@ -84,8 +84,8 @@ if "Kruskal-Wallis" in test_category:
         total_n = sum([len(a) for a in arrays])
         
         if epsilon_sq < 0.01: effect_label = "Negligible"
-        elif epsilon_sq < 0.04: effect_label = "Small"
-        elif epsilon_sq < 0.16: effect_label = "Moderate"
+        elif epsilon_sq < 0.08: effect_label = "Small"
+        elif epsilon_sq < 0.26: effect_label = "Moderate"
         else: effect_label = "Large"
             
         col1, col2, col3, col4 = st.columns(4)
@@ -96,18 +96,20 @@ if "Kruskal-Wallis" in test_category:
         if use_verbose:
             with st.expander("ALGORITHM EXECUTION DETAILS (VERBOSE)", expanded=True):
                 st.code(f"""N = {details['N']}
+N = {details['N']}
+k = {details['k']}
 n_i = {details['n_i']}
 H_unadjusted = {details['H_unadjusted']:.4f}
 correction_factor = {details['correction_factor']:.6f}
 H_final = {H_stat:.4f}
-Epsilon_Squared = H_final / (N - 1) = {details['epsilon_sq']:.4f}""", language="python")
+Epsilon_Squared = max(0, (H_final - k + 1) / (N - k)) = {details['epsilon_sq']:.4f}""", language="python")
         st.markdown("#### Scientific Interpretation & Business Insight")
         if p_val < 0.05:
             st.success(f"**Status: Reject Null Hypothesis ($H_0$)**\n\nStatistical evidence confirms a significant difference in median values.")
         
             if epsilon_sq < 0.01:
                 st.warning(f"**Insight: Statistically Significant, but Practically Negligible!**\nDue to the massive sample size (N={total_n}), the algorithm detected a microscopic variance. However, the effect size (ε² = {epsilon_sq:.4f}) is mathematically negligible. The data distributions essentially overlap.")
-            elif epsilon_sq < 0.04:
+            elif epsilon_sq < 0.08:
                 st.info(f"**Insight: Statistically Significant with a Small Effect.**\nThe Kruskal-Wallis test proves the groups are fundamentally different, but the effect size (ε² = {epsilon_sq:.4f}) indicates the magnitude of this difference is minor.")
             else:
                 st.success(f"**Insight: Highly Significant (Statistically & Practically).**\nThe p-value confirms a difference, and the substantial effect size (ε² = {epsilon_sq:.4f}) proves this separation is large enough to warrant distinct strategic treatments.")
