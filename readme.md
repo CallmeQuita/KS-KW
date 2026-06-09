@@ -10,7 +10,7 @@ Used for comparing multiple independent groups to determine whether they origina
 
 ### 2. Kolmogorov-Smirnov Test (K-S Test)
 
-* **One-Sample K-S Test**: Used for testing data normality.
+* **One-Sample K-S Test**: Used for good-ness of-fit testing.
 * **Two-Sample K-S Test**: Used for comparing the distributions of two independent samples.
 * **Two-Dimensional K-S Test**: Used for comparing spatial distributions in two-dimensional datasets.
 
