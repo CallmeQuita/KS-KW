@@ -114,7 +114,7 @@ Epsilon_Squared = max(0, (H_final - k + 1) / (N - k)) = {details['epsilon_sq']:.
             else:
                 st.success(f"**Insight: Highly Significant (Statistically & Practically).**\nThe p-value confirms a difference, and the substantial effect size (ε² = {epsilon_sq:.4f}) proves this separation is large enough to warrant distinct strategic treatments.")
             
-            st.subheader("4. Post-hoc Analysis (Dunn's Test)")
+            st.subheader("3. Post-hoc Analysis (Dunn's Test)")
             dunn_table = perform_dunn_test(df, x_col, y_col)
             fig_heat = create_dunn_heatmap(dunn_table)
             st.plotly_chart(fig_heat, use_container_width=True)

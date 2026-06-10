@@ -4,21 +4,48 @@ import numpy as np
 import contextily as ctx
 
 def create_dunn_heatmap(p_values_matrix):
-    custom_colorscale = [
-        [0.0, 'darkgreen'], 
-        [0.049, 'limegreen'], 
-        [0.05, 'lightcoral'], 
-        [1.0, 'darkred']
+    text_matrix = [
+        [f"{val:.4f}" if val > 0.001 else f"{val:.1e}" for val in row] 
+        for row in np.array(p_values_matrix)
     ]
     
     fig = px.imshow(
         p_values_matrix, 
-        text_auto=".3f", 
-        color_continuous_scale=custom_colorscale, 
+        text_auto=True, 
+        color_continuous_scale='YlOrRd_r',
         range_color=[0, 1],
-        title="Dunn's Post-hoc Test - Adjusted p-values (Green = Significant)"
+        labels=dict(color="<b>Adjusted p-value</b>")
     )
-    fig.update_layout(xaxis_title="Groups", yaxis_title="Groups", coloraxis_colorbar=dict(title="P-value"))
+    
+    fig.update_traces(
+        text=text_matrix,
+        texttemplate="%{text}",
+        xgap=3,
+        ygap=3,
+        textfont=dict(weight='bold', size=14)
+    )
+    
+    fig.update_layout(
+        title=dict(
+            text="<b>Data Science Salaries: Dunn's Test with Bonferroni</b>",
+            x=0.45,
+            xanchor='center',
+            y=0.95,
+            font=dict(size=18, family="Arial")
+        ),
+        xaxis_title=None, 
+        yaxis_title=None,
+        font=dict(family="Arial"),
+        plot_bgcolor='white',
+        paper_bgcolor='white',
+        width=600,
+        height=600,
+        margin=dict(t=80, b=40, l=40, r=40)
+    )
+    
+    fig.update_xaxes(tickfont=dict(weight='bold', size=13))
+    fig.update_yaxes(tickfont=dict(weight='bold', size=13))
+    
     return fig
 
 def create_overlay_histogram(df, x_col, y_col, dataset_option):
@@ -115,11 +142,6 @@ def plot_ks_2d_crosshair(data1, data2, label1, label2, title, best_x, best_y, ma
 
     ax.plot(best_x, best_y, marker='s', color='red', markersize=10, fillstyle='none', markeredgewidth=3,
              label=f'Max D-Stat Origin\nD = {max_d_stat:.4f}')
-
-    ax.text(best_x - 0.3, best_y + 0.3, 'Top-Left', fontsize=12, fontweight='bold', alpha=0.8, ha='right')
-    ax.text(best_x + 0.3, best_y + 0.3, 'Top-Right', fontsize=12, fontweight='bold', alpha=0.8, ha='left')
-    ax.text(best_x - 0.3, best_y - 0.3, 'Bottom-Left', fontsize=12, fontweight='bold', alpha=0.8, ha='right')
-    ax.text(best_x + 0.3, best_y - 0.3, 'Bottom-Right', fontsize=12, fontweight='bold', alpha=0.8, ha='left')
 
     ctx.add_basemap(ax, crs="EPSG:4326", source=ctx.providers.CartoDB.Positron)
     
